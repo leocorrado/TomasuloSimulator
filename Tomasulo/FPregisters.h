@@ -15,24 +15,26 @@
 #define FPREGISTERS_H
 
 #include <string>
-#include <iterator>
-#include <iostream>
-#include <algorithm>
 #include <array>
-
+#include <utility>
+#include <stdio.h>
+#include "OperationsEnum.h"
+#include "TagsReprise.h"
 
 class FPregisters {
 public:
     FPregisters();
     FPregisters(const FPregisters& orig);
     virtual ~FPregisters();
-    float getFloatValue (int index);
-    void setFloatValue (int index, float value);
-    int getSize ();
-    void fillWithValue (float value);
+    std::pair <TagsReprise,float> getPair (int index);
+    int getIndexOfTag (TagsReprise tag);
+    float getValueByTag (TagsReprise tag);
+    void setValueByTag (TagsReprise tag ,float value);
+    void setTag (TagsReprise newVal, TagsReprise oldVal);
+    
+   
 private:
-    std::array<float,4> fpRegister;
-       
+    std::array< std::pair<TagsReprise,float>, 4 > fpRegister {{}} ;  
 };
 
 #endif /* FPREGISTERS_H */

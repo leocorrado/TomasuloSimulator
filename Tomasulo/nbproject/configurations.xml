@@ -6,6 +6,8 @@
                    projectFiles="true">
       <itemPath>FPregisters.h</itemPath>
       <itemPath>OperationsEnum.h</itemPath>
+      <itemPath>ReservationStation.h</itemPath>
+      <itemPath>TagsReprise.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -15,6 +17,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>FPregisters.cpp</itemPath>
+      <itemPath>ReservationStation.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -48,6 +51,12 @@
       </item>
       <item path="OperationsEnum.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ReservationStation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ReservationStation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TagsReprise.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -76,6 +85,12 @@
       <item path="FPregisters.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="OperationsEnum.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReservationStation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ReservationStation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TagsReprise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -13,12 +13,14 @@
 
 #ifndef OPERATIONSENUM_H
 #define OPERATIONSENUM_H
-enum class OperationsEnum : char { SUM = '+', SUB = '-', MUL = '*', DIV = '/' };
 
-std::ostream& operator<<(std::ostream& os, OperationsEnum e)
-{
-    return os << static_cast<char>(e);
-}
+#include <ostream>
 
+enum class OperationsEnum :  char { SUM = '+', SUB = '-', MUL = '*', DIV = '/', UNDEF = 'U' };
+
+std::ostream& operator<<(std::ostream& os, OperationsEnum obj)
+ {
+    return os << static_cast<char>(obj);
+ }
 #endif /* OPERATIONSENUM_H */
 
