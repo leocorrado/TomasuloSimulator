@@ -18,7 +18,7 @@
 
 enum class OperationsEnum :  char { SUM = '+', SUB = '-', MUL = '*', DIV = '/', UNDEF = 'U' };
 
-std::ostream& operator<<(std::ostream& os, OperationsEnum obj)
+inline std::ostream& operator<<(std::ostream& os, OperationsEnum obj)
  {
     return os << static_cast<char>(obj);
  }

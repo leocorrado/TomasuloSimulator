@@ -13,6 +13,10 @@
 
 #ifndef RESERVATIONSTATION_H
 #define RESERVATIONSTATION_H
+#include <iostream>
+#include <iomanip>  
+#include <string>
+#include <sstream>
 
 #include "OperationsEnum.h"
 #include "TagsReprise.h"
@@ -20,20 +24,25 @@
 class ReservationStation {
 public:
     ReservationStation();
+    ReservationStation(TagsReprise nname);
+
     ReservationStation(const ReservationStation& orig);
     virtual ~ReservationStation();
     float getVj ();
     float getVk ();
     TagsReprise getQj ();
     TagsReprise getQk ();
+    TagsReprise getName ();
     OperationsEnum getOperation ();
-    bool    getBusy();
+    bool    isBusy();
     void setVj (float value);
     void setVk (float value);
     void setBusy (bool value);
     void setQj (TagsReprise tagQj);
     void setQk (TagsReprise tagQk);
     void setOperation (OperationsEnum op);
+    std::string toPrint ();
+
 private:
         OperationsEnum operation;
         TagsReprise    qj;
@@ -41,8 +50,7 @@ private:
         float   vj;
         float   vk;
         bool    busy;
-
-
+        TagsReprise name;
 };
 
 #endif /* RESERVATIONSTATION_H */

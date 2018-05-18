@@ -35,7 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/FPregisters.o \
+	${OBJECTDIR}/FPointRegister.o \
+	${OBJECTDIR}/Instruction.o \
+	${OBJECTDIR}/LoadBuffer.o \
+	${OBJECTDIR}/RRegisters.o \
 	${OBJECTDIR}/ReservationStation.o \
 	${OBJECTDIR}/main.o
 
@@ -64,10 +67,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/tomasulo: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/tomasulo ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/FPregisters.o: FPregisters.cpp
+${OBJECTDIR}/FPointRegister.o: FPointRegister.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FPregisters.o FPregisters.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FPointRegister.o FPointRegister.cpp
+
+${OBJECTDIR}/Instruction.o: Instruction.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Instruction.o Instruction.cpp
+
+${OBJECTDIR}/LoadBuffer.o: LoadBuffer.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LoadBuffer.o LoadBuffer.cpp
+
+${OBJECTDIR}/RRegisters.o: RRegisters.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/RRegisters.o RRegisters.cpp
 
 ${OBJECTDIR}/ReservationStation.o: ReservationStation.cpp
 	${MKDIR} -p ${OBJECTDIR}

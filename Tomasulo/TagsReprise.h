@@ -14,11 +14,62 @@
 #ifndef TAGSREPRISE_H
 #define TAGSREPRISE_H
 #include <ostream>
-enum class TagsReprise : char { X = 'X' , Y = 'Y', Z = 'Z', W = 'W' , NON = 'N'};
+enum class TagsReprise : unsigned int { ADD1 = 1 ,
+                                        ADD2 = 2,
+                                        ADD3 = 3,
+                                        MUL1 = 4,
+                                        MUL2 = 5,
+                                        LOAD1 = 6,
+                                        LOAD2 = 7,
+                                        LOAD3 = 8,
+                                        LOAD4 = 9,
+                                        LOAD5 = 10,
+                                        LOAD6 = 11,
+                                        NON = 12};
 
-std::ostream& operator<<(std::ostream& os, TagsReprise obj)
+inline std::ostream& operator<<(std::ostream& os, TagsReprise e)
  {
-    return os << static_cast<char>(obj);
+     switch(e)
+    {
+         case TagsReprise::ADD1 : 
+            os << "ADD1";    
+            break;
+         case TagsReprise::ADD2 : 
+            os << "ADD2"; 
+            break;
+         case TagsReprise::ADD3 : 
+            os << "ADD3";  
+            break;
+         case TagsReprise::MUL1 : 
+            os << "MUL1"; 
+             break;
+         case TagsReprise::MUL2 : 
+            os << "MUL2";   
+            break;
+         case TagsReprise::LOAD1 :
+            os << "LOAD1";
+            break;
+         case TagsReprise::LOAD2 :
+            os << "LOAD2";
+            break;
+        case TagsReprise::LOAD3 :
+            os << "LOAD3";
+            break;
+        case TagsReprise::LOAD4 :
+            os << "LOAD4";
+            break;
+        case TagsReprise::LOAD5 :
+            os << "LOAD5";
+            break;
+        case TagsReprise::LOAD6 :
+            os << "LOAD6";
+            break; 
+         case TagsReprise::NON :
+             os << "NON ASIGNED";
+             break;
+        default    : os.setstate(std::ios_base::failbit);
+    }
+    return os;
  }
 
 #endif /* TAGSREPRISE_H */
