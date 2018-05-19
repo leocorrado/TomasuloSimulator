@@ -14,6 +14,8 @@
 #ifndef FPOINTREGISTER_H
 #define FPOINTREGISTER_H
 #include "TagsReprise.h"
+#include "FPRegNames.h"
+
 
 #include <iostream>
 
@@ -22,12 +24,15 @@
 class FPointRegister {
 public:
     FPointRegister();
-    FPointRegister (float val);
+    FPointRegister (float val, FPRegNames nam);
+    FPointRegister (FPRegNames nam);
     virtual ~FPointRegister();
     void setValue (float val);
     bool isBusy();
     float getValue ();
     TagsReprise getTag();
+    FPRegNames getName();
+    void setName (FPRegNames nam);
     void setTag (TagsReprise obj);
     void setBusy (bool bus);
     void toPrint();
@@ -35,6 +40,8 @@ private:
     float value;
     TagsReprise tag;
     bool busy;
+    FPRegNames name;
+    
 };
 
 #endif /* FPOINTREGISTER_H */

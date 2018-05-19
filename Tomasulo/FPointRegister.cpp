@@ -18,13 +18,23 @@ FPointRegister::FPointRegister()
     value = 5000;
     tag = TagsReprise::NON;
     busy = false;
+    name = FPRegNames::NON;
 }
 
-FPointRegister::FPointRegister (float val)
+FPointRegister::FPointRegister (float val, FPRegNames nam)
 {
     value = val;
     tag = TagsReprise::NON;
     busy = false;
+    name = nam;
+}
+
+FPointRegister::FPointRegister(FPRegNames nam)
+{
+    value = 5000;
+    tag = TagsReprise::NON;
+    busy = false;
+    name = nam;
 }
 
 
@@ -46,6 +56,11 @@ void FPointRegister::setValue(float val)
     value = val;
 }
 
+void FPointRegister::setName(FPRegNames nam)
+{
+    name = nam;
+}
+
 float FPointRegister::getValue()
 {
     return value;
@@ -61,9 +76,14 @@ bool FPointRegister::isBusy()
     return busy;
 }
 
+FPRegNames FPointRegister::getName()
+{
+    return name;
+}
+
 void FPointRegister::toPrint()
 {
-    std::cout<< "FP Register #: Value: "<< this->getValue() << 
-                " Busy: " << this->isBusy() << " Associated Reserv.Station: " 
+    std::cout<< "FP Register #: " << this->getName() << " Value: "<< this->getValue() 
+            << " Busy: " << this->isBusy() << " Associated Reserv.Station: " 
             << tag << std::endl;
 }

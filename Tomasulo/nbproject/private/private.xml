@@ -8,14 +8,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/FPointRegister.h</file>
-            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/RRegisters.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/RRegistersNames.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/TagsReprise.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/main.cpp</file>
-            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/RRegisters.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/FPointRegister.cpp</file>
+            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/LoadBuffer.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/ReservationStation.cpp</file>
-            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/ReservationStation.h</file>
         </group>
     </open-files>
 </project-private>

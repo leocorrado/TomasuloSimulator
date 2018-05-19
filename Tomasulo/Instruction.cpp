@@ -14,9 +14,12 @@
 #include "Instruction.h"
 
 Instruction::Instruction() {
-    rd = 0;
-    rs = 0;
-    rt = 0;
+    rd = FPRegNames::NON;
+    rs_val = 0;
+    rt_r = RRegistersNames::NON;
+    rs_fp = FPRegNames::NON;
+    rt_fp = FPRegNames::NON;
+    
     opCode = OperationsEnum::UNDEF;
     issueClock = 0;
     executeClockBegin = 0;
@@ -24,11 +27,13 @@ Instruction::Instruction() {
     writeBackClock = 0;
 }
 
-Instruction::Instruction(int RD, int RS, int RT,
+Instruction::Instruction(FPRegNames RD, int RS, RRegistersNames RT,
                          OperationsEnum OPCODE) {
     rd = RD;
-    rs = RS;
-    rt = RT;
+    rs_val = RS;
+    rs_fp = FPRegNames::NON;
+    rt_r = RT;
+    rt_fp = FPRegNames::NON;
     opCode = OPCODE;
     issueClock = 0;
     executeClockBegin = 0;
@@ -36,7 +41,19 @@ Instruction::Instruction(int RD, int RS, int RT,
     writeBackClock = 0;
 }
 
-Instruction::Instruction(const Instruction& orig) {
+Instruction::Instruction (FPRegNames RD, FPRegNames RS, FPRegNames RT,
+                OperationsEnum OPCODE)
+{
+    rd = RD;
+    rs_fp = RS;
+    rt_fp = RT;
+    rs_val = 0;
+    rt_r = RRegistersNames::NON;
+    opCode = OPCODE;
+    issueClock = 0;
+    executeClockBegin = 0;
+    executeClockEnd = 0;
+    writeBackClock = 0;
 }
 
 Instruction::~Instruction() {
@@ -62,19 +79,30 @@ OperationsEnum Instruction::getOpCode()
     return opCode;
 }
 
-int Instruction::getRd()
+FPRegNames Instruction::getRd()
 {
     return rd;
 }
 
-int Instruction::getRs()
+int Instruction::getRsVal()
 {
-    return rs;
+    return rs_val;
+}
+    
+FPRegNames Instruction::getRsFp()
+{
+    return rs_fp;
 }
 
-int Instruction::getRt()
+
+FPRegNames Instruction::getRtFp()
 {
-    return rt;
+    return rt_fp;
+}
+
+RRegistersNames Instruction::getRtR ()
+{
+    return rt_r;
 }
 
 int Instruction::getWriteBackClock()
@@ -100,4 +128,18 @@ void Instruction::setIssueClock(int clk)
 void Instruction::setWriteBackClock(int clk)
 {
     writeBackClock = clk;
+}
+
+void Instruction::toPrint ()
+{
+    if (this->getOpCode() == OperationsEnum::LOAD)
+    {
+        std::cout << this->getOpCode() << " " << this->getRd() << " "
+                << this->getRsVal() << " + " << this->getRtR() << std::endl;             
+    }
+    else
+    {
+        std::cout  << this->getOpCode() << " " << this->getRd() << " " 
+                << this->getRsFp() << " " << this->getRtFp() << std::endl;
+    }
 }

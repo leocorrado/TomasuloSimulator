@@ -16,12 +16,34 @@
 
 #include <ostream>
 
-enum class OperationsEnum :  char { SUM = '+', SUB = '-', MUL = '*', DIV = '/',
-                                    LOAD = 'L', UNDEF = 'U' };
+enum class OperationsEnum :  int { ADD = 1, SUB = 2, MUL = 3, DIV = 4,
+                                    LOAD = 5, UNDEF = 6 };
 
 inline std::ostream& operator<<(std::ostream& os, OperationsEnum obj)
  {
-    return os << static_cast<char>(obj);
+     switch(obj)
+    {
+         case OperationsEnum::DIV : 
+            os << "DIV";    
+            break;
+         case OperationsEnum::LOAD : 
+            os << "LD"; 
+            break;
+         case OperationsEnum::ADD : 
+            os << "ADD";  
+            break;
+         case OperationsEnum::SUB : 
+            os << "SUB"; 
+             break;
+         case OperationsEnum::MUL : 
+            os << "MUL";   
+            break;
+         case OperationsEnum::UNDEF :
+            os << "UNDEFINED";
+            break;
+        default    : os.setstate(std::ios_base::failbit);
+    }
+    return os;
  }
 #endif /* OPERATIONSENUM_H */
 

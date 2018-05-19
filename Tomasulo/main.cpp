@@ -15,6 +15,7 @@
 #include "OperationsEnum.h"
 #include "TagsReprise.h"
 #include "RRegistersNames.h"
+#include "FPRegNames.h"
 #include "Instruction.h"
 #include "ReservationStation.h"
 #include "RRegisters.h"
@@ -58,11 +59,31 @@ using namespace std;
 void printFunctionalUnits ( vector<ReservationStation> );
 void printRRegisters (vector <RRegisters>);
 void printFPRegisters (vector <FPointRegister>);
+void printInstructions (vector <Instruction>);
 
 int main(int argc, char** argv) 
 {
-    Instruction instruction1 (0,1,2, OperationsEnum::SUM),
-            instruction2 (4,3,5, OperationsEnum::MUL);
+    //#######################################################################
+    // Inicializacion de las instrucciones a ejecutar
+    
+    Instruction I0 = Instruction (FPRegNames::FP1, 34,  RRegistersNames::R2,
+                                    OperationsEnum::LOAD);      
+    Instruction I1 = Instruction (FPRegNames::FP2, 45, RRegistersNames::R3,
+                                     OperationsEnum::LOAD);
+    Instruction I2 = Instruction (FPRegNames::FP3, FPRegNames::FP2, 
+                                  FPRegNames::FP4, OperationsEnum::MUL);
+    Instruction I3 = Instruction (FPRegNames::FP5, FPRegNames::FP1,
+                                  FPRegNames::FP2, OperationsEnum::SUB);
+    Instruction I4 = Instruction (FPRegNames::FP0, FPRegNames::FP3, 
+                                  FPRegNames::FP1, OperationsEnum::DIV);
+    Instruction I5 = Instruction(FPRegNames::FP1, FPRegNames::FP5,
+            FPRegNames::FP2, OperationsEnum::ADD);
+    
+    vector<Instruction> INSTRUCTIONS = {I0,I1,I2,I3,I4,I5};
+    
+    printInstructions (INSTRUCTIONS);
+    
+    
     
     //######################################################################
     //  Inicialización de las estaciones de Reserva
@@ -105,11 +126,15 @@ int main(int argc, char** argv)
     //  Inicialiacion de los FP- Registers
     // 
     
-    FPointRegister F0 = FPointRegister ();
-    FPointRegister F1 = FPointRegister ();
-    FPointRegister F2 = FPointRegister ();
-    FPointRegister F3 = FPointRegister ();
-    vector<FPointRegister> FPREGS = {F0,F1,F2,F3};
+    FPointRegister F0 = FPointRegister (FPRegNames::FP0);
+    FPointRegister F1 = FPointRegister (FPRegNames::FP1);
+    FPointRegister F2 = FPointRegister (FPRegNames::FP2);
+    FPointRegister F3 = FPointRegister (FPRegNames::FP3);
+    FPointRegister F4 = FPointRegister (FPRegNames::FP4);
+    FPointRegister F5 = FPointRegister (FPRegNames::FP5);
+
+
+    vector<FPointRegister> FPREGS = {F0,F1,F2,F3, F4, F5};
     
     printFPRegisters (FPREGS);
     // 
@@ -148,3 +173,14 @@ void printFPRegisters (vector <FPointRegister> FPREGS)
     }
     cout << endl;
 }
+
+void printInstructions (vector <Instruction> INSTRUCTIONS)
+{
+    cout << "Instrucciones a Ejecutar" << endl;
+    for (int i = 0; i < INSTRUCTIONS.size(); i++)
+    {
+        INSTRUCTIONS [i].toPrint();
+    }
+    cout << endl;
+}
+

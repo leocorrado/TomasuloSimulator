@@ -4,13 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>FPRegNames.h</itemPath>
       <itemPath>FPointRegister.h</itemPath>
       <itemPath>Instruction.h</itemPath>
       <itemPath>LoadBuffer.h</itemPath>
       <itemPath>OperationsEnum.h</itemPath>
       <itemPath>RRegisters.h</itemPath>
       <itemPath>RRegistersNames.h</itemPath>
-      <itemPath>RegistersEnum.h</itemPath>
       <itemPath>ReservationStation.h</itemPath>
       <itemPath>TagsReprise.h</itemPath>
     </logicalFolder>
@@ -53,6 +53,8 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="FPRegNames.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FPointRegister.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FPointRegister.h" ex="false" tool="3" flavor2="0">
@@ -72,8 +74,6 @@
       <item path="RRegisters.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RRegistersNames.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RegistersEnum.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ReservationStation.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -104,6 +104,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="FPRegNames.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FPointRegister.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FPointRegister.h" ex="false" tool="3" flavor2="0">
@@ -123,8 +125,6 @@
       <item path="RRegisters.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RRegistersNames.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RegistersEnum.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ReservationStation.cpp" ex="false" tool="1" flavor2="0">
       </item>
