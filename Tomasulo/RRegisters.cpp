@@ -13,12 +13,53 @@
 
 #include "RRegisters.h"
 
-RRegisters::RRegisters() {
+RRegisters::RRegisters() 
+{
+    value = 1000;
+    name = RRegistersNames::NON;
 }
 
-RRegisters::RRegisters(const RRegisters& orig) {
+RRegisters::RRegisters (int val, RRegistersNames nam)
+{
+    value = val;
+    name = nam;
+
 }
+
+RRegisters::RRegisters (RRegistersNames nam)
+{
+    value = 1000;
+    name = nam;
+}
+
+
+
 
 RRegisters::~RRegisters() {
 }
 
+int RRegisters::getRegisterValue ()
+{
+    return value;
+}
+
+
+void RRegisters::setRegisterValue (int val)
+{
+    value = val;
+}
+
+RRegistersNames RRegisters::getRegisterName ()
+{
+    return name;
+}
+void RRegisters::setRegisterName (RRegistersNames nam)
+{
+    name = nam;
+}
+
+void RRegisters::toPrint ()
+{
+    std::cout << "RRegister #: " << this->getRegisterName()
+              << " Value: " << this->getRegisterValue () << std::endl;
+}

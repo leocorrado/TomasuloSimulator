@@ -34,8 +34,7 @@ ReservationStation::ReservationStation(TagsReprise nname)
     name = nname;
 }
 
-ReservationStation::ReservationStation(const ReservationStation& orig) {
-}
+
 
 ReservationStation::~ReservationStation() {
 }
@@ -104,15 +103,11 @@ TagsReprise ReservationStation::getName()
 {
     return name;
 }
-std::string ReservationStation::toPrint()
+void ReservationStation::toPrint()
 {
-    std::ostringstream stream;
-    std::string aux;
-    stream << "RS #: " << this->getName() << "  Busy: " << this->isBusy() << "  op: "<<
+    std::cout << "RS #: " << this->getName() << "  Busy: " << this->isBusy() << "  op: "<<
                this->getOperation() << "  Vj: " << std::setw(3) << this->getVj() << "  Vk: " << std::setw(3) <<
                this->getVk() << "  Qj: " << this->getQj() << "  Qk: " <<
                 this->getQk() << "\n";
-    aux = stream.str();
-    return aux;
 }
 

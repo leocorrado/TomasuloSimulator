@@ -17,16 +17,16 @@ FPointRegister::FPointRegister()
 {
     value = 5000;
     tag = TagsReprise::NON;
+    busy = false;
 }
 
 FPointRegister::FPointRegister (float val)
 {
     value = val;
     tag = TagsReprise::NON;
+    busy = false;
 }
 
-FPointRegister::FPointRegister(const FPointRegister& orig) {
-}
 
 FPointRegister::~FPointRegister() {
 }
@@ -34,6 +34,11 @@ FPointRegister::~FPointRegister() {
 void FPointRegister::setTag(TagsReprise obj)
 {
     tag = obj;
+}
+
+void FPointRegister::setBusy(bool bus)
+{
+    busy = bus;
 }
 
 void FPointRegister::setValue(float val)
@@ -49,4 +54,16 @@ float FPointRegister::getValue()
 TagsReprise FPointRegister::getTag()
 {
     return tag;
+}
+
+bool FPointRegister::isBusy()
+{
+    return busy;
+}
+
+void FPointRegister::toPrint()
+{
+    std::cout<< "FP Register #: Value: "<< this->getValue() << 
+                " Busy: " << this->isBusy() << " Associated Reserv.Station: " 
+            << tag << std::endl;
 }

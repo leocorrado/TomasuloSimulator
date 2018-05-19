@@ -14,20 +14,27 @@
 #ifndef FPOINTREGISTER_H
 #define FPOINTREGISTER_H
 #include "TagsReprise.h"
+
+#include <iostream>
+
+
+
 class FPointRegister {
 public:
     FPointRegister();
     FPointRegister (float val);
-
-    FPointRegister(const FPointRegister& orig);
     virtual ~FPointRegister();
     void setValue (float val);
+    bool isBusy();
     float getValue ();
     TagsReprise getTag();
     void setTag (TagsReprise obj);
+    void setBusy (bool bus);
+    void toPrint();
 private:
     float value;
     TagsReprise tag;
+    bool busy;
 };
 
 #endif /* FPOINTREGISTER_H */

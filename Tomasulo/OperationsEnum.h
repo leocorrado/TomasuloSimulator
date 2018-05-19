@@ -16,7 +16,8 @@
 
 #include <ostream>
 
-enum class OperationsEnum :  char { SUM = '+', SUB = '-', MUL = '*', DIV = '/', UNDEF = 'U' };
+enum class OperationsEnum :  char { SUM = '+', SUB = '-', MUL = '*', DIV = '/',
+                                    LOAD = 'L', UNDEF = 'U' };
 
 inline std::ostream& operator<<(std::ostream& os, OperationsEnum obj)
  {

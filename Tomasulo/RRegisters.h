@@ -13,18 +13,28 @@
 
 #ifndef RREGISTERS_H
 #define RREGISTERS_H
+#include "RRegistersNames.h"
 
-#include <vector>
 
+#include <iostream>
+#include <iomanip>  
+#include <string>
 
 class RRegisters {
 public:
     RRegisters();
-    RRegisters(const RRegisters& orig);
-    virtual ~RRegisters();
-    int getRegisterValue (int index);
-    void setRegisterValue (int index, int value);
+    RRegisters (int val, RRegistersNames nam);
+    RRegisters (RRegistersNames nam);
+    ~RRegisters();
+    int getRegisterValue ();
+    void setRegisterValue (int val);
+    RRegistersNames getRegisterName ();
+    void setRegisterName (RRegistersNames nam);
+    void toPrint ();
+  
 private:
+    RRegistersNames name;
+    int value;
     
 };
 

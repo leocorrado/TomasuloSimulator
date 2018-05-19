@@ -13,20 +13,21 @@
 
 #ifndef RESERVATIONSTATION_H
 #define RESERVATIONSTATION_H
+#include "OperationsEnum.h"
+#include "TagsReprise.h"
+
+
 #include <iostream>
 #include <iomanip>  
 #include <string>
-#include <sstream>
 
-#include "OperationsEnum.h"
-#include "TagsReprise.h"
+
 
 class ReservationStation {
 public:
     ReservationStation();
     ReservationStation(TagsReprise nname);
 
-    ReservationStation(const ReservationStation& orig);
     virtual ~ReservationStation();
     float getVj ();
     float getVk ();
@@ -41,7 +42,7 @@ public:
     void setQj (TagsReprise tagQj);
     void setQk (TagsReprise tagQk);
     void setOperation (OperationsEnum op);
-    std::string toPrint ();
+    void toPrint ();
 
 private:
         OperationsEnum operation;
