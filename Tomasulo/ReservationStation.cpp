@@ -21,9 +21,11 @@ ReservationStation::ReservationStation() {
     vk = 0.0;
     busy = false;
     name = TagsReprise::NON;
+    type = OperationsEnum::UNDEF;
+    address = 0;
 }
 
-ReservationStation::ReservationStation(TagsReprise nname)
+ReservationStation::ReservationStation(TagsReprise nname, OperationsEnum typ)
 {
     operation = OperationsEnum::UNDEF;
     qj = TagsReprise::NON;
@@ -32,6 +34,8 @@ ReservationStation::ReservationStation(TagsReprise nname)
     vk = 0.0;
     busy = false;
     name = nname;
+    type = typ;
+    address = 0;
 }
 
 
@@ -48,6 +52,12 @@ float ReservationStation::getVk ()
 {
     return vk;
 }
+
+int ReservationStation::getAddress ()
+{
+   return address; 
+}
+
 
 bool ReservationStation::isBusy()
 {
@@ -68,6 +78,12 @@ OperationsEnum ReservationStation::getOperation()
 {
     return operation;
 }
+
+OperationsEnum ReservationStation::getType ()
+{
+    return type;
+}
+
 
 void ReservationStation::setBusy(bool value)
 {
@@ -103,11 +119,27 @@ TagsReprise ReservationStation::getName()
 {
     return name;
 }
+
+void ReservationStation::setAddress (int addr)
+{
+    address = addr;
+}
+
 void ReservationStation::toPrint()
 {
-    std::cout << "RS #: " << this->getName() << "  Busy: " << this->isBusy() << "  op: "<<
-               this->getOperation() << "  Vj: " << std::setw(3) << this->getVj() << "  Vk: " << std::setw(3) <<
+    if (this->getType() != OperationsEnum::LOAD)
+    {
+    std::cout << "RS #: " << this->getName() << "  Busy: " << this->isBusy() << 
+            "  op: "<< this->getOperation() << "  Vj: " << std::setw(3) << 
+            this->getVj() << "  Vk: " << std::setw(3) <<
                this->getVk() << "  Qj: " << this->getQj() << "  Qk: " <<
                 this->getQk() << "\n";
+    }
+    else
+    {
+        std::cout << "RS #: " << this->getName() << "  Busy: " << this->isBusy() << 
+            "  op: "<< this->getOperation() << "  Vj: " << std::setw(3) << 
+            this->getVj() << " Address: " << this->getAddress() << " \n";
+    }
 }
 

@@ -26,15 +26,17 @@
 class ReservationStation {
 public:
     ReservationStation();
-    ReservationStation(TagsReprise nname);
+    ReservationStation(TagsReprise nname, OperationsEnum typ);
 
     virtual ~ReservationStation();
     float getVj ();
     float getVk ();
+    int getAddress ();
     TagsReprise getQj ();
     TagsReprise getQk ();
     TagsReprise getName ();
     OperationsEnum getOperation ();
+    OperationsEnum getType ();
     bool    isBusy();
     void setVj (float value);
     void setVk (float value);
@@ -42,6 +44,7 @@ public:
     void setQj (TagsReprise tagQj);
     void setQk (TagsReprise tagQk);
     void setOperation (OperationsEnum op);
+    void setAddress (int addr);
     void toPrint ();
 
 private:
@@ -52,6 +55,8 @@ private:
         float   vk;
         bool    busy;
         TagsReprise name;
+        OperationsEnum type;
+        int address;
 };
 
 #endif /* RESERVATIONSTATION_H */
