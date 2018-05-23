@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CommonDataBus.h</itemPath>
       <itemPath>FPRegNames.h</itemPath>
       <itemPath>FPointRegister.h</itemPath>
       <itemPath>Instruction.h</itemPath>
@@ -21,6 +22,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>CommonDataBus.cpp</itemPath>
       <itemPath>FPointRegister.cpp</itemPath>
       <itemPath>Instruction.cpp</itemPath>
       <itemPath>LoadBuffer.cpp</itemPath>
@@ -53,6 +55,10 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="CommonDataBus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CommonDataBus.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FPRegNames.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FPointRegister.cpp" ex="false" tool="1" flavor2="0">
@@ -104,6 +110,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CommonDataBus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CommonDataBus.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FPRegNames.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FPointRegister.cpp" ex="false" tool="1" flavor2="0">

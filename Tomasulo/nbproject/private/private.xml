@@ -10,12 +10,12 @@
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/Instruction.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/FPointRegister.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/OperationsEnum.h</file>
-            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/TagsReprise.h</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/main.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/Instruction.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/FPointRegister.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/ReservationStation.cpp</file>
             <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/FPRegNames.h</file>
+            <file>file:/home/leo/NetBeansProjects/TomasuloSimulator/Tomasulo/ReservationStation.h</file>
         </group>
     </open-files>
 </project-private>

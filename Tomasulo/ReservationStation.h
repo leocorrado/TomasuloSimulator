@@ -20,7 +20,7 @@
 #include <iostream>
 #include <iomanip>  
 #include <string>
-
+#include <cstdlib>
 
 
 class ReservationStation {
@@ -38,13 +38,27 @@ public:
     OperationsEnum getOperation ();
     OperationsEnum getType ();
     bool    isBusy();
+    bool isReady();
+    int getIssueLatency ();
+    int getWriteBackLatency ();
+    int getLatency ();
+    int getIndexOfInstruction ();
+    float getResult();
     void setVj (float value);
     void setVk (float value);
     void setBusy (bool value);
+    void setReady (bool value);
     void setQj (TagsReprise tagQj);
     void setQk (TagsReprise tagQk);
     void setOperation (OperationsEnum op);
     void setAddress (int addr);
+    void setLatency (int lat);
+    void setIssueLatency (int issueLat);
+    void setWriteBackLatency (int writeBackLat);
+    void setIndexToInstruction (int instruct);
+    void calculateResult();
+    void executeLoad();
+    void flush ();
     void toPrint ();
 
 private:
@@ -57,6 +71,12 @@ private:
         TagsReprise name;
         OperationsEnum type;
         int address;
+        int latency;
+        int issueLatency;
+        int writeBackLatency;
+        int indexToInstruction;
+        float result;
+        bool ready;
 };
 
 #endif /* RESERVATIONSTATION_H */

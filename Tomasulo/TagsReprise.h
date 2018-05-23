@@ -65,7 +65,7 @@ inline std::ostream& operator<<(std::ostream& os, TagsReprise e)
             os << "LOAD6";
             break; 
          case TagsReprise::NON :
-             os << "NON ASIGNED";
+             os << "NON";
              break;
         default    : os.setstate(std::ios_base::failbit);
     }

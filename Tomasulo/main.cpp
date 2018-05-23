@@ -20,7 +20,7 @@
 #include "ReservationStation.h"
 #include "RRegisters.h"
 #include "FPointRegister.h"
-
+#include "CommonDataBus.h"
 
 
 #include <iostream>
@@ -40,13 +40,15 @@ const int SUB_LATENCY = 2;
 const int LOAD_LATENCY = 2;
 const int MULT_LATENCY = 10;
 const int DIV_LATENCY = 40;
+const int ISSUE_LATENCY = 1;
+const int WB_LATENCY = 1;
 //
 //###########################################
 //###########################################
 // Variables globales de control
 int GLOBAL_CLOCK = 0;
 int instructionsIssued = 0;
-int totalInstIssued = 0;
+int totalInstFinished = 0;
 bool finish = false;
 //
 //############################################
@@ -70,12 +72,23 @@ int issue (vector<Instruction>& instr,
           vector<FPointRegister>& fPRegs,
           vector<RRegisters>& rRegs);
 
+int execute (vector<Instruction>& instr,
+          vector<ReservationStation>& reserStations,
+          vector<FPointRegister>& fPRegs,
+          vector<RRegisters>& rRegs);
+
+int writeBack (vector<Instruction>& instr,
+          vector<ReservationStation>& reserStations,
+          vector<FPointRegister>& fPRegs,
+          vector<RRegisters>& rRegs);
+
 
 
 void printFunctionalUnits ( vector<ReservationStation> );
 void printRRegisters (vector <RRegisters>);
 void printFPRegisters (vector <FPointRegister>);
 void printInstructions (vector <Instruction>);
+void printTimingTable(vector<Instruction>);
 
 int main(int argc, char** argv) 
 {
@@ -155,16 +168,31 @@ int main(int argc, char** argv)
     printFPRegisters (fPointRegisters);
     // 
     //########################################################################
-    cout << "Comienzo de la simulacion: "<<endl<<endl<<endl;
+    //########################################################################
+    //
+    CommonDataBus commonDataBus = CommonDataBus ();
+    
+    //
+    //########################################################################
+    
+    cout << "Comienzo de la simulacion: "<<endl;
+    cout<< "-------------------------------------------------"<<endl<<endl;
     
     do
     {   
        GLOBAL_CLOCK++;
        issue (instructionsVector, functionalUnits,fPointRegisters,rRegisters);
+       execute (instructionsVector, functionalUnits,fPointRegisters,rRegisters);
+       writeBack (instructionsVector, functionalUnits,fPointRegisters,rRegisters);
+       
+       
        printFPRegisters (fPointRegisters);
        printFunctionalUnits (functionalUnits);
-        
-        
+       printTimingTable (instructionsVector);
+       
+       if (totalInstFinished == instructionsVector.size () )
+           finish = true;
+       cout << endl;
     }while (!finish);
     
     return 0;
@@ -182,106 +210,40 @@ int issue (vector<Instruction>& instr,
     int auxIndex = 0;  //Se guarda el indice de la estacion libre
     //Si todas las instrucciones ya fueron issued, hay que retornar.
     if (instructionsIssued >= instr.size())
-    {
-        //!!!!!!!!!!!!!!!!!!!!!!!
-        //sacar la linea DONE = TRUE
-        finish = true;
         return 0;
-    }
-        
-    
-    
-    
+   
     //A partir de la instruccion a leer , se le retira el operando
     OperationsEnum operando = instr [instructionsIssued].getOpCode();
-    switch (operando)
+    if (operando == OperationsEnum::MUL || operando == OperationsEnum::DIV) 
     {
-        case OperationsEnum::ADD :
-            for (int i = 0; i < reserStations.size(); i++)
+        for (int i = 0; i < reserStations.size(); i++) {
+            if (reserStations [i].getType() == OperationsEnum::MUL && !reserStations[i].isBusy()) 
             {
-                //Comprobar que existe una estacion de reserva del tipo
-                //solicitado que este libre
-                if (reserStations[i].getType() == OperationsEnum::ADD && 
-                    !reserStations[i].isBusy())
-                {
-                    auxIndex = i;
-                    instructionsIssued++;
-                    reserStations [i].setOperation(operando);
-                    banderaIssue = true;
-                    break;
-                }      
+                auxIndex = i;
+                instructionsIssued++;
+                reserStations [i].setOperation(operando);
+                banderaIssue = true;
+                break;
             }
-            //Ninguna estacion de reserva esta libre, volver al main
-            if (!banderaIssue)
-                return 1;
-            break;
-        case OperationsEnum::SUB:
-            for (int i = 0; i < reserStations.size(); i++) 
+        }
+    } 
+    else 
+    {
+        for (int i = 0; i < reserStations.size(); i++) 
+        {
+            if (reserStations [i].getType() == OperationsEnum::ADD && !reserStations[i].isBusy())
             {
-                if (reserStations[i].getType() == OperationsEnum::ADD &&
-                        !reserStations[i].isBusy()) 
-                {
-                    auxIndex = i;
-                    instructionsIssued++;
-                    reserStations [i].setOperation(operando);
-                    banderaIssue = true;
-                    break;
-                }
+                auxIndex = i;
+                instructionsIssued++;
+                reserStations [i].setOperation(operando);
+                banderaIssue = true;
+                break;
             }
-            //Ninguna estacion de reserva esta libre, volver al main
-            if (!banderaIssue)
-                return 1;
-            break;
-        case OperationsEnum::MUL:
-            for (int i = 0; i < reserStations.size(); i++) 
-            {
-                if (reserStations[i].getType() == OperationsEnum::MUL &&
-                        !reserStations[i].isBusy()) 
-                {
-                    auxIndex = i;
-                    instructionsIssued++;
-                    reserStations [i].setOperation(operando);
-                    banderaIssue = true;
-                    break;
-                }
-            }
-            //Ninguna estacion de reserva esta libre, volver al main
-            if (!banderaIssue)
-                return 1;
-            break;
-        case OperationsEnum::DIV:
-            for (int i = 0; i < reserStations.size(); i++) {
-                if (reserStations[i].getType() == OperationsEnum::MUL &&
-                        !reserStations[i].isBusy()) {
-                    auxIndex = i;
-                    instructionsIssued++;
-                    reserStations [i].setOperation(operando);
-                    banderaIssue = true;
-                    break;
-                }
-            }
-            //Ninguna estacion de reserva esta libre, volver al main
-            if (!banderaIssue)
-                return 1;
-            break;
-        case OperationsEnum::LOAD:
-            for (int i = 0; i < reserStations.size(); i++) {
-                if (reserStations[i].getType() == OperationsEnum::LOAD &&
-                        !reserStations[i].isBusy()) {
-                    auxIndex = i;
-                    instructionsIssued++;
-                    reserStations [i].setOperation(operando);
-                    banderaIssue = true;
-                    break;
-                }
-            }
-            //Ninguna estacion de reserva esta libre, volver al main
-            if (!banderaIssue)
-                return 1;
-            break;
-        default: 
-            break;
+        }
     }
+    if (!banderaIssue)
+        return 1;
+    
     FPRegNames name_rd = instr [instructionsIssued - 1].getRd();
 
     if (operando != OperationsEnum::LOAD)
@@ -327,7 +289,10 @@ int issue (vector<Instruction>& instr,
             }
         }
     }
+    
+    reserStations [auxIndex].setIndexToInstruction(instructionsIssued - 1);
     reserStations [auxIndex].setBusy(true);
+    reserStations [auxIndex].setIssueLatency(0);
     instr [instructionsIssued -1].setIssueClock(GLOBAL_CLOCK);
     for (int i = 0; i < fPRegs.size(); i++)
     {
@@ -341,8 +306,138 @@ int issue (vector<Instruction>& instr,
 }
 
 
+int execute (vector<Instruction>& instr,
+          vector<ReservationStation>& reserStations,
+          vector<FPointRegister>& fPRegs,
+          vector<RRegisters>& rRegs)
+{
+    //Chequear por cada estacion de reserva que este ocupada, si los operandos
+    //estan disponibles
+    for (int i = 0; i < reserStations.size(); i++)
+    {
+        if (reserStations [i].isBusy())
+        {
+            if (reserStations [i].getIssueLatency() >= ISSUE_LATENCY)
+            {                
+                   if (reserStations [i].getQj() == TagsReprise::NON &&
+                            reserStations [i].getQk() == TagsReprise::NON) 
+                   {
+                       if (instr [reserStations[i].getIndexOfInstruction()].getExecuteClockBegin() == 0)
+                           instr [reserStations [i].getIndexOfInstruction()].setExecuteClockBegin(GLOBAL_CLOCK);
+                       
+                       //aumento en 1 la latencia
+                       reserStations [i].setLatency(reserStations [i].getLatency() + 1);
+                       switch (reserStations [i].getOperation())
+                       {
+                           case (OperationsEnum::ADD) :
+                               if (reserStations [i].getLatency() == ADD_LATENCY)
+                               {
+                                   reserStations [i].calculateResult();
+                                   instr [reserStations [i].getIndexOfInstruction()].
+                                   setExecuteClockEnd(GLOBAL_CLOCK);
+                               }
+                               break;
+                           case (OperationsEnum::SUB) :
+                               if (reserStations [i].getLatency() == SUB_LATENCY)
+                               {
+                                   reserStations [i].calculateResult();
+                                   instr [reserStations [i].getIndexOfInstruction()].
+                                   setExecuteClockEnd(GLOBAL_CLOCK);
+                               }
+                               break;
+                           case (OperationsEnum::MUL) :
+                               if (reserStations [i].getLatency() == MULT_LATENCY)
+                               {
+                                   reserStations [i].calculateResult();
+                                   instr [reserStations [i].getIndexOfInstruction()].
+                                   setExecuteClockEnd(GLOBAL_CLOCK);
+                               }
+                               break;
+                           case (OperationsEnum::DIV) :
+                               if (reserStations [i].getLatency () == DIV_LATENCY)
+                               {
+                                   reserStations [i].calculateResult();
+                                   instr [reserStations [i].getIndexOfInstruction()].
+                                   setExecuteClockEnd(GLOBAL_CLOCK);
+                               }
+                               break;
+                           case (OperationsEnum::LOAD) :
+                               if (reserStations [i].getLatency () == LOAD_LATENCY)
+                               {
+                                   
+                                    reserStations [i].executeLoad();
+                                    instr [reserStations [i].getIndexOfInstruction()].
+                                        setExecuteClockEnd(GLOBAL_CLOCK);
+                               }
+                                break;
+                           default:
+                               break;
+                       }
+                   }       
+            }
+            else
+            {
+                reserStations [i].setIssueLatency(reserStations [i].
+                getIssueLatency() + 1);
+            }
+        }
+    }
+}
 
-
+//Verificar que pasa si 2 instrucciones terminan en el mismo clock
+int writeBack (vector<Instruction>& instr,
+          vector<ReservationStation>& reserStations,
+          vector<FPointRegister>& fPRegs,
+          vector<RRegisters>& rRegs)
+{
+    for (int i = 0; i < reserStations.size() ; i++)
+    {
+        //check if result is ready
+        if (reserStations [i].isReady())
+        {
+            //and 1 cycle of WB of delay happen
+            if (reserStations [i].getWriteBackLatency() == WB_LATENCY )
+            {
+                if (instr [reserStations [i].getIndexOfInstruction()].getWriteBackClock() == 0)
+                    instr [reserStations [i].getIndexOfInstruction()].setWriteBackClock(GLOBAL_CLOCK);
+                
+                //Grabar en los registros FP el resultado
+                //obtenido en la estacion de reserva asociada.
+                for (int x = 0; x < fPRegs.size(); x++)
+                {
+                    if (fPRegs [x].getTag() == reserStations [i].getName())
+                    {
+                        fPRegs [x].setValue(reserStations [i].getResult());
+                        fPRegs [x].setBusy(false);
+                        fPRegs [x].setTag(TagsReprise::NON);
+                    }
+                }
+                
+                for (int x = 0; x < reserStations.size(); x++)
+                {
+                    if (reserStations [x].getQj() == reserStations [i].getName())
+                    {
+                        reserStations [x].setVj(reserStations [i].getResult());
+                        reserStations [x].setQj(TagsReprise::NON);
+                    }
+                    if (reserStations [x].getQk () == reserStations [i].getName())
+                    {
+                        reserStations [x].setVk (reserStations [i].getResult());
+                        reserStations [x].setQk (TagsReprise::NON);
+                    }
+                }
+                //resetear la estacion  de reserva asi se libera
+                reserStations [i].flush();
+                totalInstFinished++;
+                
+            }
+            else
+            {
+                reserStations [i].setWriteBackLatency(reserStations [i].getWriteBackLatency() + 1);
+            }
+        }
+    }
+}
 
 
 
@@ -388,3 +483,32 @@ void printInstructions (vector <Instruction> INSTRUCTIONS)
     cout << endl;
 }
 
+void printTimingTable(vector<Instruction> INST)
+{
+    char separator    = ' ';
+    const int width     = 10;
+    char lineSeperator = '-';
+    const int lineWidth = 30;
+
+    // Define column labels
+    cout << left << setw(width) << setfill(separator) << "Inst";
+    cout << left << setw(width) << setfill(separator) << "Issue";
+    cout << left << setw(width) << setfill(separator) << "Execute";
+    cout << left << setw(width) << setfill(separator) << "WB";
+    cout << left << setw(width) << setfill(separator) << "SystemClock"
+    << endl;
+    cout << right << setw(width*5) << setfill(separator) << GLOBAL_CLOCK;
+    cout << endl;
+    cout << left << setw(lineWidth) << setfill(lineSeperator);
+    cout << endl;
+    // Define Row Labels and values
+    for(int i=0;i<INST.size();i++)
+    {
+        cout << left  << setw(width) << setfill(separator) << i;
+        cout << left << setw(width) << setfill(separator) << INST[i].getIssueClock();
+        cout << INST[i].getExecuteClockBegin() <<  "-";
+        cout << left << setw(width) << setfill(separator)  << INST[i].getExecuteClockEnd();
+        cout << left << setw(width) << setfill(separator) << INST[i].getWriteBackClock();
+        cout << endl;
+    }
+}
