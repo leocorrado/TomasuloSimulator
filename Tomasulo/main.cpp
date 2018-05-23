@@ -227,7 +227,7 @@ int issue (vector<Instruction>& instr,
             }
         }
     } 
-    else 
+    else if (operando == OperationsEnum::ADD || operando == OperationsEnum::SUB)
     {
         for (int i = 0; i < reserStations.size(); i++) 
         {
@@ -240,6 +240,20 @@ int issue (vector<Instruction>& instr,
                 break;
             }
         }
+    }
+    else
+    {
+      for (int i = 0; i < reserStations.size(); i++) 
+      {
+          if (reserStations [i].getType() == OperationsEnum::LOAD && !reserStations[i].isBusy())
+          {
+              auxIndex = i;
+              instructionsIssued++;
+              reserStations [i].setOperation(operando);
+              banderaIssue = true;
+              break;
+          }
+      }
     }
     if (!banderaIssue)
         return 1;
